@@ -61,6 +61,62 @@ header {
     border: 1px solid white;
 }
 
+
+.email-form {
+    max-width: 90px;
+    margin: 20px auto;
+    padding: 13px;
+    border: 1px solid white;
+    background-color: #293499;
+    color: white;
+}
+
+.email-form h2 {
+    color: inherit; 
+}
+
+.email-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+.email-form label {
+    margin-bottom: 8px;
+    color: inherit;
+}
+
+.email-form input {
+    padding: 8px;
+    margin-bottom: 16px;
+    border: 1px solid #000080; 
+}
+
+.email-form button {
+    padding: 10px;
+    background-color: #000080; 
+    color: #fff; 
+    border: 1px solid white;
+    cursor: pointer;
+}
+
+.email-form button:hover {
+    background-color: #0000cd; 
+}
+
+.email-form p {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.email-form a {
+    color: inherit; 
+    text-decoration: none;
+}
+
+.email-form a:hover {
+    color: #FFA;
+}
+
 main {
     height: 84vh;
 }
