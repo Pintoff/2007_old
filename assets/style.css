@@ -134,6 +134,41 @@ main {
     margin-bottom: 10px;
 }
 
+.main_content form {
+    max-width: 321px;
+    margin: 50px auto;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #ffffff;
+    border: 1px solid white;
+    background-color: #293499;
+}
+
+.main_content label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.main_content input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    border: 1px solid #ffffff;
+    box-sizing: border-box;
+}
+
+.main_content input[type="submit"], input[type="reset"] {
+    background-color: #000080;
+    color: #fff;
+    border: 1px solid white;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.main_content input[type="submit"]:hover, input[type="reset"]:hover {
+    background-color: #1a5276;
+}
+
 .post_text {
     color: black;
 }
