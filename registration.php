@@ -1,6 +1,7 @@
 <?php
+?>
 
-<form action="process_registration.php" method="post">
+<form id="regForm" action="reg.php" method="post">
     <label for="FirstName">Имя пользователя:</label>
     <input type="text" name="FirstName" required><br>
 
@@ -20,5 +21,18 @@
     <input type="reset" value="Очистить">
 </form>
 
-
-?>
+<script>
+ $(document).ready(function(){
+    $('#myForm').submit(function(){
+        $.ajax({
+        type: "POST",
+        url: "reg.php",
+        data: "FirstName",
+        success: function(html){
+            $('.main_content').html(html);
+        }
+    });
+    return false;
+    });
+ });
+</script> 
