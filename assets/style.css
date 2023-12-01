@@ -149,6 +149,11 @@ main {
     margin-bottom: 8px;
 }
 
+
+.news_item p span {
+    font-size: 1.2em;
+    font-weight: 600;
+}
 .main_content input {
     width: 100%;
     padding: 8px;
@@ -222,7 +227,7 @@ background: linear-gradient(90deg, rgba(212,241,247,1) 16%, rgba(45,88,167,1) 10
 }
 
 .news p {
-    margin-left: 20px;
+    margin-left: 2px;
     margin-right: 5px;
 }
 
