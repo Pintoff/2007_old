@@ -3,7 +3,23 @@
 require 'dbConnect.php';
 
 
+function Salt (){
+    $i;
+    $salt ='';
+    for ($i = 1; $i <= 2; $i++) {
+    $rnd = (int)(rand(75) + 48);
+    if (($rnd > 57) && ($rnd < 65)) {
+    $rnd = 65;
+    } elseif (($rnd > 90) && ($rnd < 97)) {
+    $rnd = 97;
+    }
+    $salt .= chr($rnd);
+    }
+    return $salt;
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+ 
 
     $firstName = $_POST["FirstName"];
     $mail = $_POST["mail"];
@@ -29,7 +45,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-
+    $salt = Salt();
+    $cryptPasswd = crypt($passwd, $salt);
 
     $checkQuery = "SELECT * FROM users WHERE mail='$mail' OR login='$login'";
     $result = $conn->query($checkQuery);
@@ -41,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
 
-    $insertQuery = "INSERT INTO users (FirstName, mail, login, passwd) VALUES ('$firstName', '$mail', '$login', '$passwd')";
+    $insertQuery = "INSERT INTO users (FirstName, mail, login, passwd) VALUES ('$firstName', '$mail', '$login', '$cryptPasswd')";
     if ($conn->query($insertQuery) === TRUE) {
         echo "Регистрация успешна";
     } else {
