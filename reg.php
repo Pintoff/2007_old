@@ -29,19 +29,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     if ($passwd !== $rePasswd) {
-        echo "Пароль и подтверждение пароля не совпадают";
+        echo json_encode(["error" => "Пароль и подтверждение пароля не совпадают"]);
         exit();
     }
 
 
     if (strlen($firstName) > 30 || strlen($mail) > 30 || strlen($login) > 30 || strlen($passwd) > 30) {
-        echo "Превышена максимальная длина данных (30 символов)";
+        echo json_encode(["error" => "Превышена максимальная длина данных (30 символов)"]);
         exit();
     }
 
 
     if (!filter_var($mail, FILTER_VALIDATE_EMAIL)) {
-        echo "Некорректный формат e-mail";
+        echo json_encode(["error" => "Некорректный формат e-mail"]);
         exit();
     }
 
@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $conn->query($checkQuery);
 
     if ($result->num_rows > 0) {
-        echo "Этот адрес электронной почты или логин уже занят";
+        echo json_encode(["error" => "Этот адрес электронной почты или логин уже занят"]);
         $conn->close();
         exit();
     }
@@ -60,13 +60,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $insertQuery = "INSERT INTO users (FirstName, mail, login, passwd) VALUES ('$firstName', '$mail', '$login', '$cryptPasswd')";
     if ($conn->query($insertQuery) === TRUE) {
-        echo "Регистрация успешна";
+        echo json_encode(["info" => "Вы успешно зарегистрировались, авторизуйтесь с использованием email и пароля."]);
     } else {
-        echo "Ошибка при регистрации: " . $conn->error;
+        echo json_encode(["error" => "Ошибка при регистрации."]);
     }
 
     $conn->close();
 } else {
-    echo "Неверный метод запроса";
+    echo json_encode(["error" => "Неверный метод запроса"]);
 }
 ?>

@@ -1,7 +1,7 @@
 <?php
 ?>
-
-<form id="regForm" action="reg.php" method="post">
+<p id="err_msgReg"></p>
+<form id="regForm" onsubmit="register(); event.preventDefault();" method="post">
     <label for="FirstName">Имя пользователя:</label>
     <input type="text" name="FirstName" required><br>
 

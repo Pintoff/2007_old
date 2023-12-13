@@ -16,7 +16,7 @@
     <main>
         <div class="sections">
             <ul>
-                <li><a href="#">Главная</a></li>
+                <li><a href="/">Главная</a></li>
                 <li><a href="#">Информация</a></li>
                 <li><a href="#">Ноутбуки</a></li>
                 <li><a href="#">Нетбуки</a></li>
@@ -24,7 +24,7 @@
 
             <div class="email-form">
                 <h2>ПОЧТА</h2>
-                <form action="login.php" method="post"> 
+                <form id="loginForm" method="post" onsubmit="login(); event.preventDefault();"> 
                     <label for="email">E-mail:</label>
                     <input type="email" id="email" name="email" required>
             
@@ -33,12 +33,13 @@
             
                     <button type="submit">Войти</button>
                 </form>
+                <p id="err_msg"></p>
             
-                <p>Нет аккаунта? <a href="#" id="registrationLink" onclick="showRegistrationForm()">Зарегистрируйтесь</a></p>
+                <p>Нет аккаунта? <a href="#" id="registrationLink">Зарегистрируйтесь</a></p>
             </div>
 
         </div>
-        <div class="main_content">
+        <div class="main_content" id="main_content">
             <div class="post">
                 <h2>Добрый день!</h2>
                 <div class="picture">
@@ -79,6 +80,42 @@
 </body>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
+    function login() {
+        $.ajax({
+        type: "POST",
+        url: "login.php",
+        data: $('#loginForm').serialize(),
+        success: function(response) {
+            var data = JSON.parse(response);
+            if (data.error) {
+            $("#err_msg").text(data.error).css("color", "red");
+            } else {
+                var userInfo = "Имя: " + data.firstName + "<br>" +
+                "E-mail: " + data.email + "<br>" +
+                "Логин: " + data.login + "<br>";
+                $("#main_content").html(userInfo);
+            }
+            }
+        });
+    }
+
+    function register() {
+        $.ajax({
+        type: "POST",
+        url: "reg.php",
+        data: $('#regForm').serialize(),
+        success: function(response) {
+            var data = JSON.parse(response);
+            if (data.error) {
+            $("#err_msgReg").text(data.error).css("color", "red");
+            } else {
+                var regInfo = "Успех <br> " + data.info;
+                $("#main_content").html(regInfo);
+            }
+            }
+        });
+    }
+
     $(registrationLink).click(function() {
         $.ajax({
             url: 'registration.php',
