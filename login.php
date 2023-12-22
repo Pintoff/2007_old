@@ -33,15 +33,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($result->num_rows > 0) {
         $user = $result->fetch_assoc();
 
-        echo json_encode([
+        if ($email == 'admin@admin.ru') {
+            $adminQuery = "SELECT FirstName, mail, login, id FROM users";
+            $adminResult = $conn->query($adminQuery);
+            
+            if ($adminResult->num_rows > 0) {
+                $adminData = [];
+                while ($adminRow = $adminResult->fetch_assoc()) {
+                $adminData[] = $adminRow;
+                }
+                
+                echo json_encode([
+                "adminData" => $adminData,
+                "message" => "Admin information retrieved successfully"
+                ]);
+                
+                exit();
+            }
+            
+            echo json_encode([
             "firstName" => $user["FirstName"],
             "email" => $user["mail"],
             "login" => $user["login"],
             "message" => "Авторизация успешна"
-        ]);
-    } else {
-    echo json_encode(["error" => "Неверный email или пароль"]);
-    exit();
+            ]);
+            } else {
+            echo json_encode(["error" => "Неверный email или пароль"]);
+            exit();
+            }
     }
 }
 ?>

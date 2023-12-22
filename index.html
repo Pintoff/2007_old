@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="devName" content="pinto2007">
-    <link href="./assets/style.css" rel="stylesheet" />
+    <link href="./assets/style.css?v=3" rel="stylesheet" />
     <title>Компьютеры</title>
 </head>
 <body>
@@ -80,54 +80,91 @@
 </body>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
+    var info;
     function login() {
-        $.ajax({
+    $.ajax({
         type: "POST",
         url: "login.php",
         data: $('#loginForm').serialize(),
         success: function(response) {
             var data = JSON.parse(response);
             if (data.error) {
-            $("#err_msg").text(data.error).css("color", "red");
+                $("#err_msg").text(data.error).css("color", "red");
             } else {
-                var userInfo = "Имя: " + data.firstName + "<br>" +
-                "E-mail: " + data.email + "<br>" +
-                "Логин: " + data.login + "<br>";
-                $("#main_content").html(userInfo);
-            }
-            }
-        });
-    }
+                if (data.adminData) {
+                    info = data.adminData;
+                    var adminInfo = "<table border='1'>" +
+                    "<tr><th>FirstName</th><th>email</th><th>login</th><th>Action</th></tr>";
 
-    function register() {
-        $.ajax({
+                    for (var i = 0; i < data.adminData.length; i++) {
+                        adminInfo += "<tr>" +
+                        "<td><input type='text' id='adminName_" + i + "' value='" + data.adminData[i].FirstName + "'></td>" +
+                        "<td>" + data.adminData[i].mail + "</td>" +
+                        "<td>" + data.adminData[i].login + "</td>" +
+                        "<td><button onclick='updateAdminName(" + i + ")'>Update</button></td>" +
+                        "</tr>";
+                    }
+
+                    adminInfo += "</table>" + "Message: " + data.message + " ";
+                    $("#main_content").html(adminInfo);
+                } else {
+                    var userInfo = "Имя: " + data.firstName + " " +
+                        "E-mail: " + data.email + " " + "Логин: " + data.login + "";
+                    $("#main_content").html(userInfo);
+                }
+            }
+        }
+    });
+}
+
+function register() {
+    $.ajax({
         type: "POST",
         url: "reg.php",
         data: $('#regForm').serialize(),
         success: function(response) {
             var data = JSON.parse(response);
             if (data.error) {
-            $("#err_msgReg").text(data.error).css("color", "red");
+                $("#err_msgReg").text(data.error).css("color", "red");
             } else {
                 var regInfo = "Успех <br> " + data.info;
                 $("#main_content").html(regInfo);
             }
-            }
-        });
-    }
-
-    $(registrationLink).click(function() {
-        $.ajax({
-            url: 'registration.php',
-            type: 'GET',
-            dataType: 'html',
-            success: function(data) {
-                $('.main_content').html(data);
-            },
-            error: function(error) {
-                console.log('Ошибка при загрузке данных:', error);
-            }
-        });
+        }
     });
+}
+
+$(registrationLink).click(function() {
+    $.ajax({
+        url: 'registration.php',
+        type: 'GET',
+        dataType: 'html',
+        success: function(data) {
+            $('.main_content').html(data);
+        },
+        error: function(error) {
+            console.log('Ошибка при загрузке данных:', error);
+        }
+    });
+});
+
+
+function updateAdminName(index) {
+    var newAdminName = $("#adminName_" + index).val();
+    var adminId = info[index].id;
+    $.ajax({
+        type: "POST",
+        url: "admin.php",
+        data: {
+        action: "updateAdminName",
+        adminId: adminId,
+        newAdminName: newAdminName
+    },
+    success: function(response) {
+        console.log(response);
+        login();
+    }
+    });
+}
 </script>
 </html>

@@ -128,7 +128,36 @@ main {
     float: left;
     height: inherit;
     color: black;
+    overflow-y: scroll;
 }
+
+.main_content table {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.main_content table td, .main_content table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.main_content table tr:nth-child(even) {
+    background-color: #bdcae5;
+}
+
+.main_content table tr:hover {
+    background-color: #ddd;
+}
+
+.main_content table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #0467aaf7;
+    color: white;
+}
+
 
 .main_content h2 {
     font-size: 130%;
