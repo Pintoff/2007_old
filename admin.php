@@ -5,7 +5,7 @@ if ($_POST['action'] == 'updateAdminName') {
     $adminId = $_POST['adminId'];
     $newAdminName = $_POST['newAdminName'];
 
-    // Update the admin name in the database
+
     $sql = "UPDATE users SET FirstName = ? WHERE id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("si", $newAdminName, $adminId);
