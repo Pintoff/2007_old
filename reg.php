@@ -3,6 +3,7 @@
 require 'dbConnect.php';
 
 
+
 function Salt (){
     $i;
     $salt ='';
@@ -57,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-
+    mail('recievermephimail@mail.ru', 'Test', 'Test message', 'From: testmephismtp@mail.ru');
     $insertQuery = "INSERT INTO users (FirstName, mail, login, passwd) VALUES ('$firstName', '$mail', '$login', '$cryptPasswd')";
     if ($conn->query($insertQuery) === TRUE) {
         echo json_encode(["info" => "Вы успешно зарегистрировались, авторизуйтесь с использованием email и пароля."]);
