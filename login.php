@@ -50,17 +50,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 
                 exit();
             }
-            
-            echo json_encode([
-            "firstName" => $user["FirstName"],
-            "email" => $user["mail"],
-            "login" => $user["login"],
-            "message" => "Авторизация успешна"
-            ]);
             } else {
-            echo json_encode(["error" => "Неверный email или пароль"]);
+                echo json_encode([
+                    "firstName" => $user["FirstName"],
+                    "email" => $user["mail"],
+                    "login" => $user["login"],
+                    "message" => "Авторизация успешна"
+                    ]);
             exit();
             }
+    } else {
+        echo json_encode(["error" => "Неверный email или пароль"]);
+        exit();
     }
 }
 ?>

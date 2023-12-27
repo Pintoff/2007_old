@@ -58,9 +58,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    mail('recievermephimail@mail.ru', 'Test', 'Test message', 'From: testmephismtp@mail.ru');
+    //mail('recievermephimail@mail.ru', 'Test', 'Test message', 'From: testmephismtp@mail.ru');
     $insertQuery = "INSERT INTO users (FirstName, mail, login, passwd) VALUES ('$firstName', '$mail', '$login', '$cryptPasswd')";
     if ($conn->query($insertQuery) === TRUE) {
+
+        $subject = 'Регистрация успешна';
+        $message = "<html><body>";
+        $message .= "<h2>Вы успешно зарегистрировались!</h2>";
+        $message .= "<p>Имя: $firstName</p>";
+        $message .= "<p>Email: $mail</p>";
+        $message .= "<p>Логин: $login</p>";
+        $message .= "<p>Пароль: $passwd</p>";
+        $message .= "</body></html>";
+        $headers = 'From: testmephismtp@mail.ru' . "\r\n";
+        $headers .= 'MIME-Version: 1.0' . "\r\n";
+        $headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
+        mail($mail, $subject, $message, $headers);
+            
+
         echo json_encode(["info" => "Вы успешно зарегистрировались, авторизуйтесь с использованием email и пароля."]);
     } else {
         echo json_encode(["error" => "Ошибка при регистрации."]);
