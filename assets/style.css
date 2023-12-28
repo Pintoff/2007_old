@@ -13,7 +13,7 @@ body {
     height: 100vh;
     padding: 0;
     margin: 0 auto;
-    width: 700px;
+    width: 800px;
     font-size: 10pt;
     color: #0000;
     overflow-y: hidden;
@@ -40,7 +40,7 @@ header {
 
 .sections {
     float: left;
-    width: 20%;
+    width: 24%;
     font-size: 80%;
     background: rgb(45,88,167);
     background: linear-gradient(90deg, rgba(45,88,167,1) 0%, rgba(212,241,247,1) 100%);
@@ -121,14 +121,18 @@ header {
 
 main {
     height: 84vh;
+    display: flex;
+    justify-content: space-between;
 }
 
 .main_content {
-    width: 55%;
+    margin-left: 3px;
+    margin-right: 3px;
+    width: -webkit-fill-available;
     float: left;
     height: inherit;
     color: black;
-    overflow-y: scroll;
+    overflow: auto;
 }
 
 .main_content table {
@@ -236,7 +240,6 @@ main {
     color: black;
     width: min-content;
     float: left;
-    margin-left: 12px;
     height: inherit;
 }
 
